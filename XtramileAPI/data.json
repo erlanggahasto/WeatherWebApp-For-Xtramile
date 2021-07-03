@@ -1,0 +1,16 @@
+{
+  [
+    {
+      "Country": "Indonesia",
+      "Cities": [ "Jakarta", "Bandung", "Surabaya", "Medan" ]
+    },
+    {
+      "Country": "Australia",
+      "Cities": [ "Melbourne", "Sidney", "Perth" ]
+    },
+    {
+      "Country": "Singapore",
+      "Cities": [ "Singapore" ]
+    }
+  ]
+}

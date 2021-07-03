@@ -1,0 +1,17 @@
+﻿.output_header {
+    text-align:right;
+    padding: 5px;
+}
+
+.output_content {
+    text-align: left;
+    padding: 5px;
+}
+
+.output_table {
+    border-spacing: 5px;
+}
+
+.form_input {
+    padding: 5px;
+}

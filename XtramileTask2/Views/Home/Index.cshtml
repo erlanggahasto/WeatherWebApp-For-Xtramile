@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>But if you only interest to see some samples, just try the one below</p>
+</div>
+<div class="form-main text-center" ng-app="myApp" ng-controller="myController">
+    <form>
+        <div class="form_title">Select the location</div>
+        @*<div class="form_header">Country</div>*@
+        <div class="form_input">
+            <select ng-model="select_country" ng-options="Country.country for Country in Countries" ng-change="resetWeather()">
+                <option value="">Select a country</option>
+            </select>
+        </div>
+        @*<div class="form_header">City</div>*@
+        <div class="form_input">
+            <select ng-model="select_city" ng-disabled="!select_country" ng-options="City for City in select_country.cities" ng-change="resetWeather()">
+                <option value="">Select a city</option>
+            </select>
+        </div>
+        <div class="form_input"><input type="submit" ng-click="GetWeather(select_city)" value="Get Weather" /></div>
+        <div class="output_group" ng-hide="!Weather">
+            <table class="output_table" align="center">
+                @*<tr>
+                    <td colspan="2" class="output_title">Weather</td>
+                </tr>*@
+                <tr>
+                    <td class="output_header">Location</td>
+                    <td class="output_content">{{ Weather.name }}</td>
+                </tr>
+                <tr>
+                    <td class="output_header">Time</td>
+                    <td class="output_content" ng-model="weather_time">{{ Weather.dt | date : "shortTime" }}</td>
+                </tr>
+                <tr>
+                    <td class="output_header">Wind</td>
+                    <td class="output_content" ng-model="weather_wind">{{ Weather.wind }}</td>
+                </tr>
+                <tr>
+                    <td class="output_header">Visibility</td>
+                    <td class="output_content" ng-model="weather_visibility">{{ Weather.visibility }}</td>
+                </tr>
+                <tr>
+                    <td class="output_header">Sky Conditions</td>
+                    <td class="output_content" ng-model="weather_sky_conditions">{{ Weather.weather }}</td>
+                </tr>
+                <tr>
+                    <td class="output_header">Temperature (in Celcius)</td>
+                    <td class="output_content" ng-model="weather_temp_celcius">{{ Weather.main.temp }}</td>
+                </tr>
+                <tr>
+                    <td class="output_header">Temperature (in Fahrenheit)</td>
+                    <td class="output_content" ng-model="weather_temp_fahrenheit">{{ (Weather.main.temp * (9/5)) + 32 }}</td>
+                </tr>
+                <tr ng-hide="true">
+                    <td class="output_header">Dew Point</td>
+                    <td class="output_content" ng-model="weather_dew_point" />
+                </tr>
+                <tr>
+                    <td class="output_header">Relative Humidity</td>
+                    <td class="output_content">{{ Weather.main.humidity }}</td>
+                </tr>
+                <tr>
+                    <td class="output_header">Pressure</td>
+                    <td class="output_content">{{ Weather.main.pressure }}</td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var app = angular.module('myApp', [])
+        app.controller('myController', function ($scope, $http, $window) {
+
+            $http.get("/api/geodata/countries")
+                .then(function (response) {
+                    $scope.Countries = response.data;
+                });
+
+            $scope.GetWeather = function (city) {
+                $http.get("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=d3167c7eac6f22b5a1f05c735bd3d572")
+                    .then(function (response) {
+                        $scope.Weather = response.data;
+                    });
+            };
+
+            $scope.resetWeather = function () {
+                $scope.Weather = null;
+            }
+
+        });
+
+    </script>
+}
