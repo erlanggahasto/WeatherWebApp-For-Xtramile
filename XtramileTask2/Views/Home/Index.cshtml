@@ -26,8 +26,8 @@
         <div class="output_group" ng-hide="!Weather">
             <table class="output_table" align="center">
                 @*<tr>
-                    <td colspan="2" class="output_title">Weather</td>
-                </tr>*@
+            <td colspan="2" class="output_title">Weather</td>
+        </tr>*@
                 <tr>
                     <td class="output_header">Location</td>
                     <td class="output_content">{{ Weather.name }}</td>
@@ -38,7 +38,15 @@
                 </tr>
                 <tr>
                     <td class="output_header">Wind</td>
-                    <td class="output_content" ng-model="weather_wind">{{ Weather.wind }}</td>
+                    <td class="output_content" ng-model="weather_wind">Speed : {{ Weather.wind.speed }}</td>
+                </tr>
+                <tr>
+                    <td class="output_header">&nbsp;</td>
+                    <td class="output_content" ng-model="weather_wind">Degree : {{ Weather.wind.deg }}</td>
+                </tr>
+                <tr>
+                    <td class="output_header">&nbsp;</td>
+                    <td class="output_content" ng-model="weather_wind">Gust : {{ Weather.wind.gust }}</td>
                 </tr>
                 <tr>
                     <td class="output_header">Visibility</td>
@@ -46,7 +54,9 @@
                 </tr>
                 <tr>
                     <td class="output_header">Sky Conditions</td>
-                    <td class="output_content" ng-model="weather_sky_conditions">{{ Weather.weather }}</td>
+                    <td class="output_content" ng-model="weather_sky_conditions">
+                        {{ Weather.weather[0].description }}
+                    </td>
                 </tr>
                 <tr>
                     <td class="output_header">Temperature (in Celcius)</td>
@@ -56,9 +66,9 @@
                     <td class="output_header">Temperature (in Fahrenheit)</td>
                     <td class="output_content" ng-model="weather_temp_fahrenheit">{{ (Weather.main.temp * (9/5)) + 32 }}</td>
                 </tr>
-                <tr ng-hide="true">
+                <tr ng-hide="!Weather.main.dew_point">
                     <td class="output_header">Dew Point</td>
-                    <td class="output_content" ng-model="weather_dew_point" />
+                    <td class="output_content" ng-model="weather_dew_point">{{ Weather.main.dew_point }}</td>
                 </tr>
                 <tr>
                     <td class="output_header">Relative Humidity</td>
